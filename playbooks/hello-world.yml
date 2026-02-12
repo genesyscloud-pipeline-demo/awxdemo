@@ -1,0 +1,8 @@
+- name: Hello World
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Terraform
+      community.general.terraform:
+        project_path: '{{ playbook_dir }}'
+        state: present
