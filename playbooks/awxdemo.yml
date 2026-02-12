@@ -8,3 +8,8 @@
         project_path: '{{ playbook_dir }}/../terraform'
         state: present
         force_init: true
+      register: tf_result
+
+    - name: Show terraform stdout (module)
+      ansible.builtin.debug:
+      var: tf_result.stdout_lines
