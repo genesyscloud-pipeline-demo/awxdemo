@@ -2,24 +2,9 @@
   hosts: localhost
   connection: local
   gather_facts: false
-
   tasks:
-    - name: Show paths
-      ansible.builtin.debug:
-        msg:
-          - "playbook_dir={{ playbook_dir }}"
-          - "pwd={{ lookup('ansible.builtin.pipe', 'pwd') }}"
-
-    - name: List terraform directory
-      ansible.builtin.command: ls -la "{{ playbook_dir }}/../terraform"
-      register: tf_ls
-      changed_when: false
-
-    - name: Show terraform directory listing
-      ansible.builtin.debug:
-        var: tf_ls.stdout_lines
-
     - name: Terraform
       cloud.terraform.terraform:
-        project_path: "{{ playbook_dir }}/../terraform"
+        project_path: '{{ playbook_dir }}/../terraform'
         state: present
+        force_init: true
