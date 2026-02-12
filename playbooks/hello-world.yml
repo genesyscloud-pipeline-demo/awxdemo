@@ -4,6 +4,6 @@
   gather_facts: false
   tasks:
     - name: Terraform
-      community.general.terraform:
+      cloud.terraform.terraform:
         project_path: '{{ playbook_dir }}/../terraform'
         state: present
