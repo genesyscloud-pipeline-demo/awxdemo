@@ -4,5 +4,5 @@
   tasks:
     - name: Terraform
       community.general.terraform:
-        project_path: '{{ playbook_dir }}'
+        project_path: '{{ playbook_dir }}/../terraform'
         state: present
