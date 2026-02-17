@@ -1,0 +1,22 @@
+- name: "Validation: Artifactory Trust & Connectivity"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Step 1: Verify Host Resolution"
+      shell: "getent hosts jfrog-platform-artifactory.jfrog-platform.svc"
+      register: dns_check
+
+    - name: "Step 2: Check if Certificate is Mounted"
+      shell: "ls -l /etc/pki/ca-trust/source/anchors/artifactory-root-ca.crt"
+      register: cert_file_check
+
+    - name: "Step 3: Test SSL Handshake (The Real Test)"
+      shell: "curl -v https://jfrog-platform-artifactory.jfrog-platform.svc/artifactory/api/system/ping"
+      register: curl_check
+
+    - name: "Final Report"
+      debug:
+        msg:
+          - "DNS: {{ dns_check.stdout }}"
+          - "Cert File: {{ cert_file_check.stdout }}"
+          - "Connection: {{ curl_check.stderr_lines | select('search', 'SSL certificate verify ok') | list }}"
