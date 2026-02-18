@@ -10,6 +10,12 @@
       shell: "ls -l /etc/pki/ca-trust/source/anchors/artifactory.crt"
       register: cert_file_check
 
+    - name: List anchors
+      shell: ls -l /etc/pki/ca-trust/source/anchors/
+
+    - name: Check if cert is in bundle
+      shell: grep -q "jfrog-platform-artifactory-nginx" /etc/pki/tls/certs/ca-bundle.crt && echo FOUND || echo NOT_FOUND
+
     - name: "Step 3: Test SSL Handshake (The Real Test)"
       shell: "curl -v https://jfrog-platform-artifactory-nginx.jfrog-platform.svc/artifactory/api/system/ping"
       register: curl_check
