@@ -16,12 +16,12 @@
     - name: Check if cert is in bundle
       shell: grep -q "jfrog-platform-artifactory-nginx" /etc/pki/tls/certs/ca-bundle.crt && echo FOUND || echo NOT_FOUND
 
+    - name: Pause so I can inspect the pod
+      shell: sleep 600
+
     - name: "Step 3: Test SSL Handshake (The Real Test)"
       shell: "curl -v https://jfrog-platform-artifactory-nginx.jfrog-platform.svc/artifactory/api/system/ping"
       register: curl_check
-
-    - name: Pause so I can inspect the pod
-      shell: sleep 600
 
     - name: "Final Report"
       debug:
