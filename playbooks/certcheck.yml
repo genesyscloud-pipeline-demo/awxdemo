@@ -20,6 +20,9 @@
       shell: "curl -v https://jfrog-platform-artifactory-nginx.jfrog-platform.svc/artifactory/api/system/ping"
       register: curl_check
 
+    - name: Pause so I can inspect the pod
+      shell: sleep 600
+
     - name: "Final Report"
       debug:
         msg:
